@@ -1,5 +1,5 @@
 {
-  "name": "bold-portable-backend-dev",
+  "name": "chatgpt-api-nodejs",
   "version": "1.0.0",
   "main": "server.js",
   "private": "true",
