@@ -1,0 +1,16 @@
+NODE_ENV= development
+MONGODB_URL = 
+SECRET_KEY="abcdefghijklmnopqrstuvwxyz1234567890"
+PORT = 2000
+EXPIRES_IN = "1d"
+FILE_SIZE = 2097152 
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+APP_URL=localhost:2000
+
+OPEN_AI_KEY=
