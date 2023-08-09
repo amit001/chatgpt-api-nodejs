@@ -1,17 +1,25 @@
 require('dotenv').config()
 const express = require('express');
-const app = express();
 const cors = require('cors')
 const path = require('path')
 const authRoutes = require('./routes');
 const bodyParser = require('body-parser');
-app.use(cors());
+const app = express();
 
+const corsOptions = {
+	origin: '*', // Change this to the specific origins you want to allow
+	credentials: true,
+	methods: 'GET,PUT,POST,DELETE,OPTIONS',
+	allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json',
+};
+
+app.use(cors(corsOptions));
 // parse application/json
 app.use(bodyParser.json({
 	verify: (req, res, buf) => {
-	  req.rawBody = buf
-	}}));
+		req.rawBody = buf
+	}
+}));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function (req, res, next) {
@@ -40,5 +48,6 @@ app.all("*", function (_req, res) {
 	res.status(404);
 	res.sendFile(path.join(__dirname + "/public/404.html"));
 });
+
 
 module.exports = app;

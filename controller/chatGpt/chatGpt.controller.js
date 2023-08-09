@@ -1,6 +1,5 @@
 const apiResponse = require("../../helpers/apiResponse");
 const { Configuration, OpenAIApi } = require("openai");
-const { ObjectId } = require("mongoose").Types;
 const fs = require('fs');
 
 const configuration = new Configuration({
@@ -10,11 +9,11 @@ const openai = new OpenAIApi(configuration);
 
 exports.getGPT3Completion = async (req, res) => {
     try {
-        const { prompt, session } = req.body;
+        const { prompt, previous_prompt } = req.body;
 
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
-            messages: [{"role": "system", "content": "You are a helpful assistant."}, {role: "user", content: prompt}],
+            messages: [{"role": "assistant", "content": previous_prompt}, {role: "user", content: prompt}],
             max_tokens:100
         });
 
@@ -37,26 +36,6 @@ exports.fetchModels = async (req, res) => {
         const models = response.data.data;
 
         return apiResponse.successResponseWithData(res, "Models fetched successfully", { models });
-
-    } catch (error) {
-        return apiResponse.ErrorResponse(res, error.message);
-    }
-};
-
-exports.createImage = async (req, res) => {
-    try {
-
-        const { prompt } = req.body;
-
-        const response = await openai.createImage({
-            prompt: prompt,
-            n: 3,
-            size: "1024x1024",
-        });
-
-        const images = response.data.data;
-
-        return apiResponse.successResponseWithData(res, "Images fetched successfully", { images });
 
     } catch (error) {
         return apiResponse.ErrorResponse(res, error.message);
